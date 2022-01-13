@@ -1,44 +1,31 @@
 import "./styles.css";
 
 import Pipeline from "@pipeline-ui-2/pipeline";
+import regeneratorRuntime from "regenerator-runtime";
+export {regeneratorRuntime}
 
-document.getElementById("vote-root").innerHTML = `
-<div id="votediv" class="algo-vote-widget" align="center">
-<h1 id="voteTitle">Algoo Voot</h1>
-<select id="selectWallet">
-  <option selected value="myAlgoWallet">MyAlgo</option>
-  <option value="AlgoSigner">AlgoSigner</option>
-  <option value="WalletConnect">WalletConnect</option>
-</select>
-<button id="connect">Connect</button><br><br>
+import Plotly from 'plotly.js-dist'
 
-<label>App</label>
-<input disabled id="appId" placeholder="App index" type="number"></input>
-<button id="optin">Register</button><br><br>
+window.voteConfig = {title: "Test Poll", asaIndex: 1234567, appId: 1234567, a: "Opt A", b: "Opt B"}
 
-<label>Voting Token</label>
-<input disabled placeholder="asset id" type="number" id="asset"></input>
-<button id="asaOpt">Opt in to Token</button><br><br>
+const tealNames = ["Permissioned Voting"]
 
-<label>Select Option:</label>
-<select id="selectCandidates">
-  <option id="candidatea" value="candidatea">A</option>
-  <option id="candidateb" value="candidateb">B</option>
-</select>
-<button id="vote">Vote</button>
-<button id="check">Check</button>
-</div>`
-
-//uncomment to test window.voteConfig
-window.voteConfig = {title: "Test Poll", asaIndex: 1234567, appId: 1234567, a: "hello world", b: "goodbye world"}
-
-if (window.voteConfig !== undefined){
-  document.getElementById("candidatea").innerText = window.voteConfig.a
-  document.getElementById("candidateb").innerText = window.voteConfig.b
-  document.getElementById("asset").value = window.voteConfig.asaIndex
-  document.getElementById("appId").value = window.voteConfig.appId
-  document.getElementById("voteTitle").innerText = window.voteConfig.title
+const tealContracts = {
+  "Permissioned Voting": {},
+  "Permissionless Voting": {}
 }
+
+async function getContracts() {
+  for (let i = 0; i < tealNames.length; i++) {
+    let name = tealNames[i]
+    let data = await fetch("public/teal/" + name + ".txt")
+    tealContracts[name].program = await data.text()
+    let data2 = await fetch("public/teal/" + name + " clear.txt")
+    tealContracts[name].clearProgram = await data2.text()
+  }
+}
+
+getContracts().then(data => alert("Loaded Voting Contracts"))
 
 const wallet = Pipeline.init()
 
@@ -47,30 +34,16 @@ document.getElementById("selectWallet").onchange = function () {
 }
 
 document.getElementById("connect").onclick = function () {
+  localStorage.clear();
   Pipeline.connect(wallet).then(data => alert("Connected address: " + data))
 }
 
-document.getElementById("optin").onclick = function () {
-  let appId = document.getElementById("appId").value
-  Pipeline.optIn(appId, ["register"]).then(data => alert("Transaction status: " + data))
-}
-
-document.getElementById("vote").onclick = function () {
-  let appId = document.getElementById("appId").value
-  Pipeline.getAppCreator(appId).then(
-    data => {
-      let appArgs = ["vote", document.getElementById("selectCandidates").value]
-      let assetIndex = document.getElementById("asset").value
-      Pipeline.appCallWithTxn(appId, appArgs, data, 1, "vote", assetIndex).then(data => alert("Transaction status: " + data))
-    })
-}
+document.getElementById("createAsa").onclick = createAsa
+document.getElementById("deploy").onclick = deploy
 
 document.getElementById("check").onclick = checkVote
 
-document.getElementById("asaOpt").onclick = function () {
-  let index = document.getElementById("asset").value
-  Pipeline.send(Pipeline.address, 0, "", undefined, undefined, index)
-}
+document.getElementById("delete").onclick = deleteApp
 
 function checkVote() {
   let index = document.getElementById("appId").value
@@ -90,18 +63,100 @@ function checkVote() {
         }
       }
       window.tallies = {a: atally, b: btally}
-      //alert("Voting tallies: Option 1: " + atally + ", Option 2: " + btally)
+      chartData[0].values = [atally,btally],
+      chartData[0].labels = [window.voteConfig.a,window.voteConfig.b]
+      Plotly.redraw('voteChart', chartData, layout);
     })
 }
 
-setInterval(toggleBorder,100)
+async function deploy() {
+  modifyTeal()
 
-var on = false
-var colora = "8px solid green"
-var colorb = "20px solid red"
+  let name = "Permissioned Voting"
 
-function toggleBorder(){
-  on = !on
-  let color = on?colora:colorb
-  document.getElementById("votediv").style.border = color
+  let lastRound = await Pipeline.getParams()
+  lastRound = lastRound["last-round"]
+
+  let length = parseInt(document.getElementById("roundNumber").value)
+
+  generateCode()
+
+  Pipeline.deployTeal(tealContracts[name].program, tealContracts[name].clearProgram, [1, 1, 0, 6], [lastRound, lastRound + length, lastRound, lastRound + length]).then(data => { document.getElementById("appId").value = data })
 }
+
+function modifyTeal(){
+  let assetId = document.getElementById("asset").value
+  console.log(assetId)
+  let search1 = "// hard-coded assetid\nint 2";
+  let search2 = "// hard coded and should be changed\nint 2"
+  let replacements = [search1, search2]
+
+  for (let i = 0; i < 2; i++) {
+    tealContracts["Permissioned Voting"].program = tealContracts["Permissioned Voting"].program.replace(replacements[i], "// hard-coded assetid\nint " + assetId)
+
+  }
+}
+
+const asaData = {
+  creator: "",
+  note: "Voting token creation",
+  amount: 1,
+  decimals: 0,
+  assetName: "AnotherNft",
+  unitName: "votetkn"
+}
+
+function createAsa(){
+  asaData.creator = Pipeline.address
+  asaData.amount = parseInt(document.getElementById("asaAmount").value)
+  asaData.assetName = document.getElementById("asaName").value
+  Pipeline.createAsa(asaData).then(data => {
+    document.getElementById("asset").value = data
+  })
+}
+
+function generateCode(){
+  Object.assign(window.voteConfig,{
+    title: document.getElementById("voteTitle").value,
+    a: document.getElementById("voteA").value,
+    b: document.getElementById("voteB").value
+  })
+
+  let unpkgCode = "https://"
+
+  let code = "<script>" + JSON.stringify(window.voteConfig) + "</script>" + '<script src="' + unpkgCode + "></script>"
+
+  document.getElementById("voteCode").value = code
+
+}
+
+function deleteApp(){
+  appId = parseInt(document.getElementById("appId").value)
+  Pipeline.deleteApp(appId).then(data => alert("App deletion: " + data))
+}
+
+var chartData = [{
+  values: [50,50],
+  labels: [window.voteConfig.a, window.voteConfig.b],
+  type: 'pie',
+  marker:{
+    colors: ["#990000","#000899"]
+  }
+}];
+
+
+var layout = {
+
+  height: 3,
+  width: 300,
+  showlegend: false,
+  margin: {"t": 0, "b": 0, "l": 0, "r": 0},
+  paper_bgcolor: "rgba(0,0,0,0)",
+
+};
+
+
+Plotly.newPlot('voteChart', chartData, layout);
+
+
+

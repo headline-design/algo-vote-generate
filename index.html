@@ -1,14 +1,59 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>AlgoPay</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="src/styles.css">
-  </head>
 
-  <body>
-    <div id="vote-root" align="center"></div>
-    <script src="src/index.js"></script>
-    </body>
+<head>
+  <title>AlgoVote</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="src/styles.css">
+</head>
+
+<style>
+  body {
+    background-image: url('dist/public/cardassia.jpg');
+  }
+</style>
+
+<body align="center">
+  <div id="votediv" class="algo-vote-widget" align="center">
+    <h3 id="voteTitle">Algoo Voot</h3>
+    <h6>"We gonna VoooooOOOOOOOT!!!" -- average plebbit vooter</h6>
+    <h1>Central Command of the Cardassian Obsidian Order</h1>
+    <h5><i>All votes are rigged and all outcomes are certain</i></h5>
+    <img src="dist/public/dukat.jpg" width="100%" /><br>
+    <select id="selectWallet">
+      <option selected value="myAlgoWallet">MyAlgo</option>
+      <option value="AlgoSigner">AlgoSigner</option>
+      <option value="WalletConnect">WalletConnect</option>
+    </select>
+    <button id="connect">Connect</button><br><br>
+
+    <input type="number" id="asaAmount" placeholder="total supply"></input>
+    <input type="text" id="asaName" placeholder="token name"></input>
+    <button id="createAsa">Create Voting Token</button><br><br>
+
+    <label>Voting Token</label>
+    <input placeholder="asset id" type="number" id="asset"></input><br><br>
+
+    <input type="number" id="roundNumber" placeholder="voting length in rounds"></input>
+    <input type="text" id="voteTitle" placeholder="Poll title"></input>
+    <input type="text" id="voteA" placeholder="Poll option A"></input>
+    <input type="text" id="voteB" placeholder="Poll option B"></input><br>
+    <button id="deploy">Create Poll</button><br>
+
+    <p>Widget Code:</p>
+
+    <textarea id="voteCode"></textarea><br><br>
+
+    <label>App Id</label>
+    <input id="appId" placeholder="App index" type="number"></input><br><br>
+
+    <div id="voteChart"></div>
+
+    <button id="check">Check Poll Tallies</button>
+    <button id="delete">Delete Poll</button>
+  </div>
+  <script src="src/index.js"></script>
+</body>
+
 </html>

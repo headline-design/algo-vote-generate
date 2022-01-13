@@ -1,6 +1,6 @@
 .algo-vote-widget {
   width: 350px;
-  border: 8px solid green;
+  border: 8px solid #990000;
   padding: 20px;
   margin: 10px;
   background-color: black;
@@ -12,10 +12,21 @@
 }
 
 body {
-  background-color: navy;
+  background-color:black;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
-input:disabled {
-  background-color: aquamarine;
-  color: black
+input {
+  background-color: #990000;
+  color: white;
+  font-weight: bold;
+}
+
+textarea {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+
+	width: 100%;
 }
