@@ -10,6 +10,11 @@ window.voteConfig = {title: "Test Poll", asaIndex: 1234567, appId: 1234567, a: "
 
 const tealNames = ["Permissioned Voting"]
 
+const snippet = `<link rel="stylesheet" href="https://unpkg.com/algo-vote@1.0.1/dist/styles.dd855970.css">
+<link rel="stylesheet" href="https://unpkg.com/algo-vote@1.0.1/dist/src.a2b27638.css">
+<div id="vote-root" align="center"></div>
+<script src="https://unpkg.com/algo-vote@1.0.1/dist/src.a2b27638.js"></script>`
+
 const tealContracts = {
   "Permissioned Voting": {},
   "Permissionless Voting": {}
@@ -118,15 +123,20 @@ function createAsa(){
 function generateCode(){
   Object.assign(window.voteConfig,{
     title: document.getElementById("voteTitle").value,
+    asaIndex: document.getElementById("asset").value,
+    appId: document.getElementById("appId").value,
     a: document.getElementById("voteA").value,
     b: document.getElementById("voteB").value
   })
 
-  let unpkgCode = "https://"
-
-  let code = "<script>" + JSON.stringify(window.voteConfig) + "</script>" + '<script src="' + unpkgCode + "></script>"
+  let code = "<script>window.voteConfig = " + JSON.stringify(window.voteConfig) + "</script>" + snippet
 
   document.getElementById("voteCode").value = code
+
+  let doc = document.getElementById('preview').contentWindow.document;
+  doc.open();
+  doc.write(code);
+  doc.close();
 
 }
 
