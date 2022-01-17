@@ -30,9 +30,233 @@ async function getContracts() {
   }
 }
 
-getContracts().then(data => alert("Loaded Voting Contracts"))
+if (window.voteConfig !== undefined) {
+  document.getElementById("candidatea").innerText = window.voteConfig.a
+  document.getElementById("candidateb").innerText = window.voteConfig.b
+  document.getElementById("asset").value = window.voteConfig.asaIndex
+  document.getElementById("appId").value = window.voteConfig.appId
+  document.getElementById("voteTitle").innerText = window.voteConfig.title
+}
 
 const wallet = Pipeline.init()
+
+document.getElementById("WalletConnect").onclick = () => {
+  localStorage.clear()
+  document.getElementById("WalletConnect").style.backgroundColor = "var(--bg-color-after)"
+  document.getElementById("WalletConnect").style.color = "var(--clr-text-5)"
+  document.getElementById("myAlgoWallet").style.color = "var(--clr-text-7)"
+  document.getElementById("AlgoSigner").style.color = "var(--clr-text-7)"
+  document.getElementById("AlgoSigner").style.backgroundColor = "var(--clr-bg)"
+  document.getElementById("myAlgoWallet").style.backgroundColor = "var(--clr-bg)"
+
+  Pipeline.pipeConnector = "WalletConnect"
+  Pipeline.connect(wallet).then(data => { log(data); close() })
+}
+
+document.getElementById("AlgoSigner").onclick = () => {
+
+  document.getElementById("WalletConnect").style.backgroundColor = "var(--clr-bg)"
+  document.getElementById("AlgoSigner").style.backgroundColor = "var(--bg-color-after)"
+  document.getElementById("myAlgoWallet").style.color = "var(--clr-text-7)"
+  document.getElementById("WalletConnect").style.color = "var(--clr-text-7)"
+  document.getElementById("AlgoSigner").style.color = "var(--clr-text-5)"
+  document.getElementById("myAlgoWallet").style.backgroundColor = "var(--clr-bg)"
+  Pipeline.pipeConnector = "AlgoSigner"
+  Pipeline.connect(wallet).then(data => { log(data); close() })
+}
+
+document.getElementById("myAlgoWallet").onclick = () => {
+
+  document.getElementById("WalletConnect").style.backgroundColor = "var(--clr-bg)"
+  document.getElementById("AlgoSigner").style.backgroundColor = "var(--clr-bg)"
+  document.getElementById("myAlgoWallet").style.backgroundColor = "var(--bg-color-after)"
+  document.getElementById("myAlgoWallet").style.color = "var(--clr-text-5)"
+  document.getElementById("WalletConnect").style.color = "var(--clr-text-7)"
+  document.getElementById("AlgoSigner").style.color = "var(--clr-text-7)"
+
+  Pipeline.pipeConnector = "myAlgoWallet"
+  Pipeline.connect(wallet).then(data => { log(data); close() })
+}
+
+document.getElementById("optin").onclick = function () {
+  let appId = document.getElementById("appId").value
+  Pipeline.optIn(appId, ["register"]).then(data => log("Transaction status: " + data))
+}
+
+document.getElementById("vote").onclick = function () {
+  let appId = document.getElementById("appId").value
+  document.getElementById("check").disabled = false
+  Pipeline.getAppCreator(appId).then(
+    data => {
+      let appArgs = ["vote", candidate]
+      let assetIndex = document.getElementById("asset").value
+      Pipeline.appCallWithTxn(appId, appArgs, data, 1, "vote", assetIndex).then(data => log("Transaction status: " + data))
+    })
+}
+
+document.getElementById("toggle-css").onclick = toggleMode;
+document.getElementById("wallet-connect").onclick = setOpenOne;
+document.getElementById("info").onclick = setOpenThree;
+document.getElementById("plotly-switch").onclick = setOpenSix;
+document.getElementById("options-btn").onclick = setOpenTwo;
+document.getElementById("div-close").onclick = close;
+document.getElementById("options-close").onclick = close;
+document.getElementById("info-close").onclick = close;
+document.getElementById("wallet-connect-close").onclick = close;
+document.getElementById("candidatea").onclick = setA;
+document.getElementById("candidateb").onclick = setB;
+
+document.getElementById("check").onclick = checkVote
+
+document.getElementById("asaOpt").onclick = function () {
+  let index = document.getElementById("asset").value
+  Pipeline.send(Pipeline.address, 0, "", undefined, undefined, index)
+}
+
+function setOpen() {
+  document.getElementById("modal-root").style.display = "block";
+  document.getElementById("modal-root").className = "modal-root fade show";
+}
+
+function setOpenOne() {
+  document.getElementById("modal-root-1").style.display = "block";
+  document.getElementById("modal-root-1").className = "modal fade show";
+}
+
+function setOpenTwo() {
+  document.getElementById("modal-root-3").style.display = "block";
+  document.getElementById("modal-root-3").className = "modal-root-3 show";
+  document.getElementById("options-div").style.display = "none";
+
+}
+
+function setOpenThree() {
+  document.getElementById("modal-root-5").style.display = "block";
+  document.getElementById("modal-root-5").className = "modal-root-5 show";
+
+}
+
+function setOpenSix() {
+  let shown = showChart ? "block" : "none"
+  showChart = !showChart
+  document.getElementById("plotly-container").style.display = shown;
+}
+
+function close() {
+  Object.assign({ isOpen: false });
+  document.getElementById("modal-root").style.display = "none";
+  document.getElementById("modal-root-1").style.display = "none";
+  document.getElementById("modal-root-3").style.display = "none";
+  document.getElementById("modal-root-5").style.display = "none";
+  document.getElementById("options-div").style.display = "block";
+  document.getElementById("plotly-container").style.display = "none";
+
+}
+
+var dark = true
+function toggleMode() {
+  dark = !dark
+  if (dark) {
+    document.getElementById("sun").style.display = "block";
+    document.getElementById("moon").style.display = "none";
+
+  } else {
+    document.getElementById("sun").style.display = "none";
+    document.getElementById("moon").style.display = "block";
+  }
+  var element = document.body;
+  element.classList.toggle("light");
+}
+
+function checkVote() {
+  setOpen();
+  let index = document.getElementById("appId").value
+  Pipeline.readGlobalState(index).then(
+    data => {
+      let btally = 0
+      let atally = 0
+      for (let i = 0; i < data.length; i++) {
+        let thisKey = window.atob(data[i].key)
+        if (thisKey === "candidateb") {
+          btally = data[i].value.uint
+        }
+        else {
+          if (thisKey === "candidatea") {
+            atally = data[i].value.uint
+          }
+        }
+      }
+      window.tallies = { a: atally, b: btally }
+      chartData[0].values = [atally, btally],
+        chartData[0].labels = [window.voteConfig.a, window.voteConfig.b]
+      //Plotly.redraw('voteChart', chartData, layout);
+      document.getElementById("textTallies-1").innerText = window.voteConfig.a
+      document.getElementById("textTallies-2").innerText = atally
+      document.getElementById("textTallies-3").innerText = window.voteConfig.b
+      document.getElementById("textTallies-4").innerText = btally
+    })
+}
+
+//setInterval(toggleBorder,100)
+
+var on = false
+var colora = ""
+var colorb = ""
+
+function toggleBorder() {
+  on = !on
+  let color = on ? colora : colorb
+  document.getElementById("votediv").style.border = color
+}
+
+function setA() {
+  candidate = "candidatea"
+  document.getElementById("candidatea").style.backgroundColor = "var(--bg-color-after)"
+  document.getElementById("candidatea").style.color = "var(--clr-text-5)"
+  document.getElementById("candidateb").style.color = "var(--clr-text-7)"
+  document.getElementById("candidateb").style.backgroundColor = "var(--clr-bg)"
+  document.getElementById("options-btn").style.backgroundColor = "var(--clr-text-3)"
+  document.getElementById("vote").disabled = false
+  close()
+}
+
+function setB() {
+  candidate = "candidateb"
+  document.getElementById("candidateb").style.backgroundColor = "var(--bg-color-after)"
+  document.getElementById("candidateb").style.color = "var(--clr-text-5)"
+  document.getElementById("candidatea").style.backgroundColor = "var(--clr-bg)"
+  document.getElementById("candidatea").style.color = "var(--clr-text-7)"
+  document.getElementById("options-btn").style.backgroundColor = "var(--clr-text-3)"
+  document.getElementById("vote").disabled = false
+  close()
+}
+
+var chartData = [{
+  values: [50, 50],
+  labels: [window.voteConfig.a, window.voteConfig.b],
+  type: 'pie',
+  marker: {
+    colors: ["#4842e9", "#7773ef"]
+  }
+}];
+
+var layout = {
+
+  height: 3,
+  width: 300,
+  showlegend: false,
+  margin: { "t": 0, "b": 0, "l": 0, "r": 0 },
+  paper_bgcolor: "rgba(0,0,0,0)",
+
+
+};
+
+function log(data) {
+  document.getElementById("log").innerText = data
+
+}
+
+getContracts().then(data => log("Loaded Voting Contracts"))
 
 document.getElementById("selectWallet").onchange = function () {
   Pipeline.pipeConnector = document.getElementById("selectWallet").value
@@ -40,7 +264,7 @@ document.getElementById("selectWallet").onchange = function () {
 
 document.getElementById("connect").onclick = function () {
   localStorage.clear();
-  Pipeline.connect(wallet).then(data => alert("Connected address: " + data))
+  Pipeline.connect(wallet).then(data => log("Connected address: " + data))
 }
 
 document.getElementById("createAsa").onclick = createAsa
@@ -142,7 +366,7 @@ function generateCode(){
 
 function deleteApp(){
   appId = parseInt(document.getElementById("appId").value)
-  Pipeline.deleteApp(appId).then(data => alert("App deletion: " + data))
+  Pipeline.deleteApp(appId).then(data => log("App deletion: " + data))
 }
 
 var chartData = [{
@@ -164,7 +388,6 @@ var layout = {
   paper_bgcolor: "rgba(0,0,0,0)",
 
 };
-
 
 Plotly.newPlot('voteChart', chartData, layout);
 
