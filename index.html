@@ -68,11 +68,23 @@
   <div id="modal-root-3" class="modal-root-3" style="display:none">
   <div class="modal-topbar"><h2 id="voteTitle-3" class="modal-title">Vote Options</h2><button id="options-close" class="modal-close"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.75732 7.75732L16.2426 16.2426"></path><path d="M7.75739 16.2426L16.2427 7.75732"></path></svg></button>
   </div>
-  <input class="btn btn--generate-link options" type="number" id="roundNumber" placeholder="voting length in rounds">candidatea</input>
-  <input class="btn btn--generate-link options" type="text" id="voteTitle" placeholder="Poll title"></input>
-  <input class="btn btn--generate-link options" type="text" id="voteA" placeholder="Poll option A">candidatea</input>
-  <input class="btn btn--generate-link options" type="text" id="voteB" placeholder="Poll option B">candidateb</input>
+  <div class="vote-field">
+  <label class="vote-field__label label">Voting length in rounds</label>
+  <input class="input--amount-2" type="number" id="roundNumber" placeholder="10000"></input>
   </div>
+  <div class="vote-field">
+    <label class="vote-field__label label">Poll title</label>
+  <input class="input--amount-2" type="text" id="voteTitle" placeholder="Shall we vote now?"></input>
+  </div>
+  <div class="vote-field">
+    <label class="vote-field__label label">Poll option A</label>
+  <input class="input--amount-2" type="text" id="voteA" placeholder="Yes"></input>
+  </div>
+  <div class="vote-field">
+    <label class="vote-field__label label">Poll option B</label>
+  <input class="input--amount-2" type="text" id="voteB" placeholder="No"></input>
+</div>  
+</div>
   </div></div><button class="btn btn--generate-link" id="vote" disabled>Vote</button> <br>
   <div class="ballot"><button id="check" data-bs-toggle="modal" data-bs-target="#exampleModal"  class="btn btn--connect-wallet" disabled><span class="count__title">Check Vote</span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="current-color" class="bi bi-file-bar-graph" viewBox="0 0 16 16">
   <path d="M4.5 12a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-1zm3 0a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1zm3 0a.5.5 0 0 1-.5-.5v-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-.5.5h-1z"/>
