@@ -50,7 +50,12 @@ document.getElementById("WalletConnect").onclick = () => {
   document.getElementById("myAlgoWallet").style.backgroundColor = "var(--clr-bg)"
 
   Pipeline.pipeConnector = "WalletConnect"
-  Pipeline.connect(wallet).then(data => { log(data); close() })
+  Pipeline.connect(wallet).then(data => { log(data); close()
+  addressIndexer(data)
+  getBalance(data)  
+  document.getElementById("wallet-connect-2").style.display = "none"
+  document.getElementById("wallet-connected").style.display = "block" })
+  
 }
 
 document.getElementById("AlgoSigner").onclick = () => {
@@ -62,7 +67,11 @@ document.getElementById("AlgoSigner").onclick = () => {
   document.getElementById("AlgoSigner").style.color = "var(--clr-text-5)"
   document.getElementById("myAlgoWallet").style.backgroundColor = "var(--clr-bg)"
   Pipeline.pipeConnector = "AlgoSigner"
-  Pipeline.connect(wallet).then(data => { log(data); close() })
+  Pipeline.connect(wallet).then(data => { log(data); close()
+  addressIndexer(data)
+  getBalance(data)
+  document.getElementById("wallet-connect-2").style.display = "none"
+  document.getElementById("wallet-connected").style.display = "block" })
 }
 
 document.getElementById("myAlgoWallet").onclick = () => {
@@ -75,7 +84,11 @@ document.getElementById("myAlgoWallet").onclick = () => {
   document.getElementById("AlgoSigner").style.color = "var(--clr-text-7)"
 
   Pipeline.pipeConnector = "myAlgoWallet"
-  Pipeline.connect(wallet).then(data => { log(data); close() })
+  Pipeline.connect(wallet).then(data => { log(data); close()
+  addressIndexer(data)
+  getBalance(data)
+  document.getElementById("wallet-connect-2").style.display = "none"
+  document.getElementById("wallet-connected").style.display = "block" })
 }
 
 document.getElementById("optin").onclick = function () {
@@ -95,11 +108,12 @@ document.getElementById("vote").onclick = function () {
 }
 
 document.getElementById("toggle-css").onclick = toggleMode;
-document.getElementById("wallet-connect").onclick = setOpenOne;
+document.getElementById("wallet-connect-2").onclick = setOpenOne;
 document.getElementById("info").onclick = setOpenThree;
 document.getElementById("plotly-switch").onclick = setOpenSix;
 document.getElementById("options-btn").onclick = setOpenTwo;
 document.getElementById("div-close").onclick = close;
+document.getElementById("msg-close").onclick = close;
 document.getElementById("options-close").onclick = close;
 document.getElementById("info-close").onclick = close;
 document.getElementById("wallet-connect-close").onclick = close;
@@ -145,6 +159,7 @@ function setOpenSix() {
 function close() {
   Object.assign({ isOpen: false });
   document.getElementById("modal-root").style.display = "none";
+  document.getElementById("msg").style.display = "none";
   document.getElementById("modal-root-1").style.display = "none";
   document.getElementById("modal-root-3").style.display = "none";
   document.getElementById("modal-root-5").style.display = "none";
@@ -168,6 +183,9 @@ function toggleMode() {
   element.classList.toggle("light");
 }
 
+function getBalance(address){
+  Pipeline.balance(address).then(data => document.getElementById("my-balance").innerText = data + " ALGO")
+ }
 function checkVote() {
   setOpen();
   let index = document.getElementById("appId").value
@@ -208,6 +226,18 @@ function toggleBorder() {
   let color = on ? colora : colorb
   document.getElementById("votediv").style.border = color
 }
+
+function disconnect() {
+  window.location.reload(true)
+}
+
+document.getElementById("disconnect-me").onclick = disconnect
+
+function addressIndexer(address){
+  let url = "https://algoexplorer.io/address/"
+   document.getElementById("algoexplorer").href = url + address
+}
+
 
 function setA() {
   candidate = "candidatea"
@@ -253,19 +283,14 @@ var layout = {
 
 function log(data) {
   document.getElementById("log").innerText = data
+  document.getElementById("own-address").innerText = data.slice(0,10) + "..."
+
 
 }
 
 getContracts().then(data => log("Loaded Voting Contracts"))
 
-document.getElementById("selectWallet").onchange = function () {
-  Pipeline.pipeConnector = document.getElementById("selectWallet").value
-}
 
-document.getElementById("connect").onclick = function () {
-  localStorage.clear();
-  Pipeline.connect(wallet).then(data => log("Connected address: " + data))
-}
 
 document.getElementById("createAsa").onclick = createAsa
 document.getElementById("deploy").onclick = deploy

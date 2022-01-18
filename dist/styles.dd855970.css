@@ -138,7 +138,9 @@
   --box-shadow-1: 0 4px 10px rgb(0 0 0 / 10%);
   --p-body: #d6d6dc;
   --h1: #fff;
-  --badge-bg: #27303f
+  --badge-bg: #27303f;
+  --wallet-1: #27303f;
+  --wallet-2: #323a58;
 }
 
 :root .light {
@@ -149,7 +151,7 @@
   --clr-text-darker: #eaeaea;
   --clr-bg-lighter: #fafafa;
   --clr-bg-lighter-2: #fff;
-  --clr-white: #000;
+  --clr-white: #333;
   --clr-bg: #fff;
   --clr-bg-2: #000;
   --clr-text: #50515a;
@@ -174,12 +176,19 @@
   --box-shadow-1: rgb(0 0 0 / 0%) 0px 0px 0px;
   --p-body: #000;
   --h1: #333;
-  --badge-bg: #b0b0f5
+  --badge-bg: #b0b0f5;
+  --wallet-1: #eaeaea;
+  --wallet-2: #d6d6dc;
 }
 
 .ballot.flex {
   display: flex;
   justify-content: center
+}
+
+.logo-svg {
+  width: 120px;
+  fill: var(--clr-white);
 }
 
 button#AlgoSigner:hover {
@@ -189,13 +198,313 @@ button#AlgoSigner:hover {
   border-style: solid
 }
 
-button#AlgoSigner:hover,button#check:hover,button#wallet-connect:hover {
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-corner {
+  display: none;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #575656;
+  background-clip: content-box;
+  border: 3px solid transparent;
+  border-radius: 6px;
+}
+
+svg.caution-cone {
+  width: 14px;
+  height: 14px;
+  margin-left: .3rem;
+}
+
+button:enabled {
+  cursor: pointer;
+}
+
+.msg__close svg {
+  display: block;
+  width: 10px;
+  height: 10px;
+  stroke: var(--color);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.msg__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+}
+
+.copyable__text {
+  word-break: break-word;
+  font-weight: inherit;
+  font-size: inherit;
+  line-height: 1.4;
+  color: currentColor;
+  text-transform: inherit;
+}
+
+.copyable {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.msg--error {
+  --color: #ff8f8f;
+  --bg: hsla(0,100%,78%,0.102);
+  --border-color: rgba(255,142,142,0.2);
+}
+
+.msg {
+  position: relative;
+  margin: 16px auto;
+  padding: 24px;
+  max-width: 432px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 12px;
+  border-radius: 6px;
+  color: var(--color);
+  background: var(--bg);
+  border: 1px solid var(--border-color);
+  text-align: start;
+}
+
+.dropdown {
+  position: relative;
+}
+
+button:enabled {
+  cursor: pointer;
+}
+
+.dropdown__content {
+  position: absolute;
+  right: 0;
+  min-width: 260px;
+  display: none;
+  flex-direction: column;
+  grid-gap: 0px !important;
+  gap: 8px;
+  padding: 8px;
+  background: #262730;
+  background: var(--clr-bg-lighter);
+  box-shadow: 0 8px 28px #0c0e14;
+  border-radius: 4px;
+  z-index: 10;
+}
+
+a#algoexplorer {
+  padding: 8px;
+  padding-left: 6px;
+  display: flex;
+}
+
+button.btn.btn--transparent {
+  padding: 8px;
+  padding-left: 6px;
+  padding-right: 0px;
+}
+
+.btn--transparent {
+  width: 100%;
+  padding: 6px;
+  font-weight: 400;
+  text-align: left;
+  color: #fff;
+  color: var(--clr-white);
+  background-color: transparent;
+  transition: all .2s ease-in-out;
+  border-radius: 4px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  grid-gap: 10px;
+  gap: 10px;
+}
+
+.copyable {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.dropdown__content:hover {
+  border: 1px solid;
+  border-color: var(--primary-color-lightest);
+}
+
+.dropdown__content{
+border: 1px solid;
+border-color: var(--border);
+box-shadow: rgb(0 0 0/12%)0 5px 10px 0;
+}
+
+
+
+.own-address:focus, .own-address:focus-visible, .own-address:focus-within, .own-address:hover {
+  color: var(--clr-text-4);
+  background-color: var(--wallet-2);
+}
+
+.dropdown:focus-within .dropdown__content, .dropdown:focus .dropdown__content, .dropdown:hover .dropdown__content {
+  display: flex;
+}
+
+.dropdown__content {
+  position: absolute;
+  right: 0;
+  min-width: 260px;
+  display: none;
+  flex-direction: column;
+  grid-gap: 8px;
+  gap: 8px;
+  padding: 8px;
+  background: #262730;
+  background: var(--clr-bg-lighter);
+  border-radius: 4px;
+  z-index: 10;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 140px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -75px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.own-balance {
+  font-weight: 500;
+  font-size: 14px;
+  padding-left: 0.6rem;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+button:enabled {
+  cursor: pointer;
+}
+.own-address {
+  padding: 0 8px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  grid-gap: 12px;
+  gap: 12px;
+  background-color: #262730;
+  background-color: var(--clr-bg-lighter);
+  border: none;
+  border-radius: 4px;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 14px;
+  color: #fff;
+  color: var(--clr-white);
+  transition: all .1s ease-in-out;
+}
+
+.own-address {
+  padding: 0 8px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  grid-gap: 12px;
+  gap: 12px;
+  background-color: #262730;
+  background-color: var(--clr-bg-lighter);
+  border: none;
+  border-radius: 4px;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 14px;
+  color: #fff;
+  color: var(--clr-white);
+  transition: all .1s ease-in-out;
+}
+
+.own-balance .currency svg {
+  display: block;
+  width: 12px;
+  height: 12px;
+}
+
+.own-balance {
+  grid-gap: 8px;
+  gap: 8px;
+}
+
+.actions, .own-balance {
+  display: flex;
+  align-items: center;
+}
+
+.actions {
+  grid-gap: 16px;
+  gap: 16px;
+}
+
+.msg--success {
+  --color: #8dffea;
+  --bg: rgba(189,255,243,0.1);
+  --border-color: rgba(9,144,119,0.2);
+}
+
+button#wallet-connect-2 {
+  display: flex;
+}
+
+button#AlgoSigner:hover,button#wallet-connect-2:hover, button#check:hover,a#wallet-connect:hover {
   font-weight: 600;
   box-shadow: 0 4px 10px rgb(0 0 0/10%);
   background: var(--btn-bg-2)!important
 }
 
-button#check:hover,button#options-btn {
+button#check:hover,button#options-btn, button#wallet-connect-2:hover {
   border-color: var(--primary-color-lightest-3);
   border-width: 1px;
   border-style: solid
@@ -207,6 +516,13 @@ button#options-btn {
   color: var(--clr-text-1);
   transition: border-color .2s ease-in-out;
   fill: var(--clr-text-1)
+}
+
+.own-address {
+  display: flex;
+  background-color: var(--clr-text-3);
+  transition: border-color .2s ease-in-out;
+  color: var(--clr-text-1);
 }
 
 button#WalletConnect:hover,button#myAlgoWallet:hover {
@@ -244,7 +560,7 @@ button#WalletConnect:hover,input#candidatea:hover,input#candidateb:hover,button#
   flex-direction: row
 }
 
-button#AlgoSigner:active,button#WalletConnect:active,input#candidatea:active,input#candidateb:active,button#myAlgoWallet:active,button#wallet-connect:hover {
+button#AlgoSigner:active,button#WalletConnect:active,input#candidatea:active,input#candidateb:active,button#myAlgoWallet:active,a#wallet-connect:hover {
   background: var(--bg-color-active-2)
 }
 
@@ -281,7 +597,7 @@ button#options-btn:active,button#options-btn:focus {
   border-color: var(--primary-color-3)
 }
 
-.modal-root-3,button#check {
+.modal-root-3,button#check,button#wallet-connect-2 {
   border: 1px solid #2e2f36;
   border: var(--border)
 }
@@ -293,11 +609,11 @@ button#options-btn:active,button#options-btn:focus {
   padding: 15px
 }
 
-button#check {
+button#check,button#wallet-connect-2 {
   transition: border-color .2s ease-in-out
 }
 
-button#check:focus {
+button#check:focus,button#wallet-connect-2#focus {
   color: var(--primary-color-lightest)!important;
   border-color: var(--primary-color)!important;
   transition: stroke .2s ease-in-out;
@@ -320,7 +636,7 @@ button#AlgoSigner:focus,button#WalletConnect:focus,input#candidatea:focus,input#
   color: #d6d6dc
 }
 
-button#wallet-connect {
+a#wallet-connect {
   display: flex;
   border: 1px solid #2e2f36;
   border-color: var(--clr-text-darker);
@@ -330,7 +646,7 @@ button#wallet-connect {
   color: var(--clr-text-1)
 }
 
-button#wallet-connect:hover {
+a#wallet-connect:hover {
   box-shadow: var(--box-shadow-1);
   border-color: var(--primary-color-lightest-2);
   border-width: 1px;
@@ -345,10 +661,24 @@ button#wallet-connect:hover {
   fill: var(--clr-text-1)
 }
 
-button#wallet-connect:focus {
+a#wallet-connect:focus {
   border-color: var(--primary-color-2)!important;
   color: var(--clr-text-4);
   background-color: var(--bg-color-active)!important
+}
+
+.banner {
+  margin-bottom: 16px;
+  padding: 14px 0;
+  font-weight: 600;
+  font-size: 14px;
+  color: #fff;
+  color: var(--clr-white);
+  text-align: center;
+  background: var(--badge-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 button#AlgoSigner,button#WalletConnect,input#candidatea,input#candidateb,button#myAlgoWallet {
@@ -422,13 +752,13 @@ button#check:disabled {
   font-weight: 700!important
 }
 
-button#check {
+button#check,button#wallet-connect-2 {
   color: var(--primary-color-lightest)!important;
   fill: var(--primary-color-lightest);
   display: flex
 }
 
-button#check:hover {
+button#check:hover,button#wallet-connect-2:hover {
   color: var(--primary-color-lightest-3)!important;
   fill: var(--primary-color-lightest-3)!important
 }
@@ -478,6 +808,16 @@ a {
   gap: 20px;
   display: flex;
   align-items: center
+}
+
+.actions {
+  background-color: var(--wallet-1);
+  border-radius: 6px;
+  padding: 3px;
+}
+
+.btn--transparent:hover {
+  background-color: var(--wallet-1);
 }
 
 .vote-form {
@@ -542,7 +882,7 @@ a {
 .app-title {
   margin: 40px auto 30px;
   line-height: 1.5;
-  font-size: 16px;
+  font-size: 14px;
   text-align: center;
   max-width: 230px
 }
@@ -569,7 +909,7 @@ a {
 
 .line {
   opacity: .4;
-  background: #000;
+  background: #333;
   width: 100%
 }
 
@@ -601,7 +941,7 @@ a {
 
 .logo-img {
   display: block;
-  width: 24px;
+  width: 40px;
   height: auto;
   fill: #fff;
   fill: var(--clr-white)
@@ -609,8 +949,8 @@ a {
 
 @media only screen and (min-width:480px) {
   .logo-img {
-      width: 17px;
-      height: 16px
+      width: 40px;
+      height: 40px
   }
 }
 
@@ -830,7 +1170,7 @@ button:disabled {
 .count__title {
   grid-gap: 5px;
   gap: 5px;
-  margin-right: 10px
+  margin-left: 10px
 }
 
 .count__title svg {
@@ -937,6 +1277,25 @@ h1#voteTitle-2 {
   margin-bottom: 1rem;
   padding-left: 1rem;
   padding-right: 1rem
+}
+
+button#wallet-connect-2:hover {
+  border-style: solid;
+  border-color: var(--primary-color-lightest);
+  fill: var(--primary-color-lightest) !important;
+  color: var(--primary-color-lightest) !important;
+  background-color: var(--btn-bg-1) !important;
+  box-shadow: var(--box-shadow-1) !important; 
+}
+
+button#wallet-connect-2 {
+  border: 1px solid var(--clr-bg-lighter);
+}
+
+button#wallet-connect-2:focus {
+  border-color: var(--primary-color)!important;
+  color: var(--primary-color) !important;
+  background-color: var(--bg-color-active)!important;
 }
 
 button#check[disabled]:hover {
