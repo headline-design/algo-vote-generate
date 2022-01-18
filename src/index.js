@@ -46,13 +46,17 @@ document.getElementById("WalletConnect").onclick = () => {
   document.getElementById("AlgoSigner").style.color = "var(--clr-text-7)"
   document.getElementById("AlgoSigner").style.backgroundColor = "var(--clr-bg)"
   document.getElementById("myAlgoWallet").style.backgroundColor = "var(--clr-bg)"
-
+  document.getElementById("slider-2").style.display = "none"
+  toggleLoader("slider",true)
   Pipeline.pipeConnector = "WalletConnect"
   Pipeline.connect(wallet).then(data => { log(data); close()
   addressIndexer(data)
-  getBalance(data)  
+  getBalance(data)
+  toggleLoader("slider",false)
+  document.getElementById("slider-2").style.display = "flex"
   document.getElementById("wallet-connect-2").style.display = "none"
-  document.getElementById("wallet-connected").style.display = "block" })
+  document.getElementById("wallet-connected").style.display = "block" 
+  })
   
 }
 
@@ -64,10 +68,14 @@ document.getElementById("AlgoSigner").onclick = () => {
   document.getElementById("WalletConnect").style.color = "var(--clr-text-7)"
   document.getElementById("AlgoSigner").style.color = "var(--clr-text-5)"
   document.getElementById("myAlgoWallet").style.backgroundColor = "var(--clr-bg)"
+  document.getElementById("slider-2").style.display = "none"
+  toggleLoader("slider",true)
   Pipeline.pipeConnector = "AlgoSigner"
   Pipeline.connect(wallet).then(data => { log(data); close()
   addressIndexer(data)
   getBalance(data)
+  toggleLoader("slider",false)
+  document.getElementById("slider-2").style.display = "flex"
   document.getElementById("wallet-connect-2").style.display = "none"
   document.getElementById("wallet-connected").style.display = "block" })
 }
@@ -80,18 +88,16 @@ document.getElementById("myAlgoWallet").onclick = () => {
   document.getElementById("myAlgoWallet").style.color = "var(--clr-text-5)"
   document.getElementById("WalletConnect").style.color = "var(--clr-text-7)"
   document.getElementById("AlgoSigner").style.color = "var(--clr-text-7)"
-
+  document.getElementById("slider-2").style.display = "none"
+  toggleLoader("slider",true)
   Pipeline.pipeConnector = "myAlgoWallet"
   Pipeline.connect(wallet).then(data => { log(data); close()
   addressIndexer(data)
   getBalance(data)
+  toggleLoader("slider",false)
+  document.getElementById("slider-2").style.display = "flex"
   document.getElementById("wallet-connect-2").style.display = "none"
   document.getElementById("wallet-connected").style.display = "block" })
-}
-
-document.getElementById("optin").onclick = function () {
-  let appId = document.getElementById("appId").value
-  Pipeline.optIn(appId, ["register"]).then(data => log("Transaction status: " + data))
 }
 
 document.getElementById("toggle-css").onclick = toggleMode;
@@ -106,6 +112,8 @@ document.getElementById("info-close").onclick = close;
 document.getElementById("wallet-connect-close").onclick = close;
 
 document.getElementById("check").onclick = checkVote
+
+//var loading = false
 
 function setOpen() {
   document.getElementById("modal-root").style.display = "block";
@@ -218,7 +226,25 @@ function log(data) {
 
 }
 
-getContracts().then(data => log("Loaded Voting Contracts"))
+
+
+function toggleLoader(id = "",on = true){
+  if(on){
+    document.getElementById(id).style.display = "block"
+  }
+  else{
+    document.getElementById(id).style.display = "none"
+  }
+}
+
+/*setInterval(()=>{if (loading){document.getElementById("slider").style.display = "block"}
+else document.getElementById("slider").style.display = "none",
+document.getElementById("slider-2").style.display = "flex"},100) */
+document.getElementById("slider-2").style.display = "none"
+toggleLoader("slider",true)
+getContracts().then(data => {log("Voting Contracts loaded")
+toggleLoader("slider",false)
+document.getElementById("slider-2").style.display = "flex"})
 
 
 
@@ -254,6 +280,8 @@ function checkVote() {
 }
 
 async function deploy() {
+  document.getElementById("verify-label-2").style.display = "none"
+  toggleLoader("slider-3",true)
   modifyTeal()
 
   let name = "Permissioned Voting"
@@ -265,7 +293,9 @@ async function deploy() {
 
   generateCode()
 
-  Pipeline.deployTeal(tealContracts[name].program, tealContracts[name].clearProgram, [1, 1, 0, 6], [lastRound, lastRound + length, lastRound, lastRound + length]).then(data => { document.getElementById("appId").value = data })
+  Pipeline.deployTeal(tealContracts[name].program, tealContracts[name].clearProgram, [1, 1, 0, 6], [lastRound, lastRound + length, lastRound, lastRound + length]).then(data => { document.getElementById("appId").value = data;toggleLoader("slider-3",false)
+  document.getElementById("badge-verification").style.display = "none"
+  document.getElementById("badge-verified").style.display = "inline-block" })
 }
 
 function modifyTeal(){
@@ -291,11 +321,16 @@ const asaData = {
 }
 
 function createAsa(){
+  document.getElementById("verify-label-1").style.display = "none"
+  toggleLoader("slider-4",true)
   asaData.creator = Pipeline.address
   asaData.amount = parseInt(document.getElementById("asaAmount").value)
   asaData.assetName = document.getElementById("asaName").value
   Pipeline.createAsa(asaData).then(data => {
     document.getElementById("asset").value = data
+    document.getElementById("token-verified").style.display = "inline-flex"
+    toggleLoader("slider-4",false)
+    document.getElementById("token-verification").style.display = "none"
   })
 }
 

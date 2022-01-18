@@ -49,8 +49,14 @@
   <div class="vote-field">
   <label class="vote-field__label label">Total supply</label>
   <input class="input input--amount" id="asaAmount" placeholder="200000" type="number">
-  <div class="vote-field__btns">
-  <button class="btn btn--change-poll" id="optin">Status</button></div>
+  <div class="vote-field__btns-2"><div target="_blank" class="btn btn--connect-wallet" id="slider-2" style="display: none;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+    <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"></path>
+  </svg><span class="count__title">Loaded</span></div><div target="_blank" class="btn btn--connect-wallet" id="token-minted" style="display: none;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+    <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"></path>
+  </svg><span class="count__title">Token minted</span></div><div id="slider" class="btn btn--change-poll"><div class="waiting-slider waiting-slider--full waiting-slider--helper-blue"><div class="waiting-slider__track"></div></div></div>
+  </div>
   </div>
   <div class="vote-switch"><svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="2 2 20 20" width="22px" fill="current-color"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path></svg></div>
   <div class="vote-field">
@@ -61,7 +67,11 @@
   <div class="">
   <div class="ballot">
   <div id="options-div" class="options-div" style="display:block">
-  <span id="" class="jsx-4236559370 badge">Voting Metadata</span>
+  <span id="token-verification" class="jsx-4236559370 badge"><div id="slider-4" style="display:none"><div class="waiting-slider-3 waiting-slider--full waiting-slider--helper-blue"><div class="waiting-slider__track"></div></div></div><div id="verify-label-1">Voting metadata</div></span>
+  <span id="token-verified" class="badge-2 badge" style="display: none;"><div id="verified-label"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+    <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"></path>
+  </svg><div class="app-verify">Token minted</div></div></span>
   <button class="btn btn--generate-link" id="options-btn" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="setOpenTwo()"><span class="options__title">Poll options</span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="current-color" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
   <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"></path>
   </svg></button></div>
@@ -70,19 +80,19 @@
   </div>
   <div class="vote-field">
   <label class="vote-field__label label">Voting length in rounds</label>
-  <input class="input--amount-2" type="number" id="roundNumber" placeholder="10000">
+  <input class="input--amount-2" autocomplete="false" type="number" id="roundNumber" placeholder="10000">
   </div>
   <div class="vote-field">
     <label class="vote-field__label label">Poll title</label>
-  <input class="input--amount-2" type="text" id="voteTitle" placeholder="Shall we vote now?">
+  <input class="input--amount-2" autocomplete="false" type="text" id="voteTitle" placeholder="Shall we vote now?">
   </div>
   <div class="vote-field">
     <label class="vote-field__label label">Poll option A</label>
-  <input class="input--amount-2" type="text" id="voteA" placeholder="Yes">
+  <input class="input--amount-2" autocomplete="false" type="text" id="voteA" placeholder="Yes">
   </div>
   <div class="vote-field">
     <label class="vote-field__label label">Poll option B</label>
-  <input class="input--amount-2" type="text" id="voteB" placeholder="No">
+  <input class="input--amount-2" autocomplete="false" type="text" id="voteB" placeholder="No">
 </div>  
 </div>
   </div></div><button class="btn btn--generate-link" id="deploy">Create poll</button> <br>
@@ -91,7 +101,11 @@
   <div class="vote-field"></div><div class="vote-field"><div class="vote-container"><div class="tallies-field">
   <label class="tallies-label" id="textTallies-1"></label><p class="input input--amount" id="textTallies-2"></p></div><button id="plotly-switch" class="vote-switch"><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 20 20" height="18px" viewBox="0 0 20 20" width="18px" fill="current-color"><rect fill="none" height="20" width="20"></rect><path d="M11.72,8.28L10,7.5l1.72-0.78L12.5,5l0.78,1.72L15,7.5l-1.72,0.78L12.5,10L11.72,8.28z M3.5,12l0.78-1.72L6,9.5L4.28,8.72 L3.5,7L2.72,8.72L1,9.5l1.72,0.78L3.5,12z M7,8l0.94-2.06L10,5L7.94,4.06L7,2L6.06,4.06L4,5l2.06,0.94L7,8z M17.88,6.5l-5.61,6.31 L9,9.54l-6,6.01l1.06,1.06L9,11.67L12.33,15L19,7.5L17.88,6.5z"></path></svg></button><div class="tallies-field"><label class="tallies-label" id="textTallies-3"></label><p class="input input--amount" id="textTallies-4"></p></div></div><div id="plotly-container" style="display:none"><div id="voteChart" <="" div=""></div></div></div></div></div></div>
   </div>
-  <span id="" class="jsx-4236559370 badge">Verification</span>
+  <span id="badge-verification" class="jsx-4236559370 badge"><div id="slider-3" style="display:none"><div class="waiting-slider-3 waiting-slider--full waiting-slider--helper-blue"><div class="waiting-slider__track"></div></div></div><div id="verify-label-2">Verification</div></span>
+  <span id="badge-verified" class="badge-2 badge" style="display:none"><div id="verified-label"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
+    <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"></path>
+  </svg><div class="app-verify">App created</div></div></span>
   <div class="vote-field"><label class="vote-field__label-2 label">Voting token</label><input type="number" placeholder="asset id" class="input input--amount-3" autocorrect="off" spellcheck="false" id="asset" value=""></div>
   <div class="vote-field"><label class="vote-field__label-2 label">App ID</label><input type="number" placeholder="App ID" class="input input--amount-3" autocorrect="off" spellcheck="false" id="appId" value=""></div>
   <div id="votediv" class="algo-vote-widget" align="center">
