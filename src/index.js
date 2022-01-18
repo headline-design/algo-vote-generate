@@ -35,7 +35,7 @@ if (window.voteConfig !== undefined) {
   document.getElementById("candidateb").innerText = window.voteConfig.b
   document.getElementById("asset").value = window.voteConfig.asaIndex
   document.getElementById("appId").value = window.voteConfig.appId
-  document.getElementById("voteTitle").innerText = window.voteConfig.title
+  document.getElementById("voteTitle-3").innerText = window.voteConfig.title
 }
 
 const wallet = Pipeline.init()
