@@ -31,8 +31,6 @@ async function getContracts() {
 }
 
 if (window.voteConfig !== undefined) {
-  document.getElementById("candidatea").innerText = window.voteConfig.a
-  document.getElementById("candidateb").innerText = window.voteConfig.b
   document.getElementById("asset").value = window.voteConfig.asaIndex
   document.getElementById("appId").value = window.voteConfig.appId
   document.getElementById("voteTitle-3").innerText = window.voteConfig.title
@@ -96,17 +94,6 @@ document.getElementById("optin").onclick = function () {
   Pipeline.optIn(appId, ["register"]).then(data => log("Transaction status: " + data))
 }
 
-document.getElementById("vote").onclick = function () {
-  let appId = document.getElementById("appId").value
-  document.getElementById("check").disabled = false
-  Pipeline.getAppCreator(appId).then(
-    data => {
-      let appArgs = ["vote", candidate]
-      let assetIndex = document.getElementById("asset").value
-      Pipeline.appCallWithTxn(appId, appArgs, data, 1, "vote", assetIndex).then(data => log("Transaction status: " + data))
-    })
-}
-
 document.getElementById("toggle-css").onclick = toggleMode;
 document.getElementById("wallet-connect-2").onclick = setOpenOne;
 document.getElementById("info").onclick = setOpenThree;
@@ -117,15 +104,8 @@ document.getElementById("msg-close").onclick = close;
 document.getElementById("options-close").onclick = close;
 document.getElementById("info-close").onclick = close;
 document.getElementById("wallet-connect-close").onclick = close;
-document.getElementById("candidatea").onclick = setA;
-document.getElementById("candidateb").onclick = setB;
 
 document.getElementById("check").onclick = checkVote
-
-document.getElementById("asaOpt").onclick = function () {
-  let index = document.getElementById("asset").value
-  Pipeline.send(Pipeline.address, 0, "", undefined, undefined, index)
-}
 
 function setOpen() {
   document.getElementById("modal-root").style.display = "block";
@@ -186,34 +166,7 @@ function toggleMode() {
 function getBalance(address){
   Pipeline.balance(address).then(data => document.getElementById("my-balance").innerText = data + " ALGO")
  }
-function checkVote() {
-  setOpen();
-  let index = document.getElementById("appId").value
-  Pipeline.readGlobalState(index).then(
-    data => {
-      let btally = 0
-      let atally = 0
-      for (let i = 0; i < data.length; i++) {
-        let thisKey = window.atob(data[i].key)
-        if (thisKey === "candidateb") {
-          btally = data[i].value.uint
-        }
-        else {
-          if (thisKey === "candidatea") {
-            atally = data[i].value.uint
-          }
-        }
-      }
-      window.tallies = { a: atally, b: btally }
-      chartData[0].values = [atally, btally],
-        chartData[0].labels = [window.voteConfig.a, window.voteConfig.b]
-      //Plotly.redraw('voteChart', chartData, layout);
-      document.getElementById("textTallies-1").innerText = window.voteConfig.a
-      document.getElementById("textTallies-2").innerText = atally
-      document.getElementById("textTallies-3").innerText = window.voteConfig.b
-      document.getElementById("textTallies-4").innerText = btally
-    })
-}
+
 
 //setInterval(toggleBorder,100)
 
@@ -236,29 +189,6 @@ document.getElementById("disconnect-me").onclick = disconnect
 function addressIndexer(address){
   let url = "https://algoexplorer.io/address/"
    document.getElementById("algoexplorer").href = url + address
-}
-
-
-function setA() {
-  candidate = "candidatea"
-  document.getElementById("candidatea").style.backgroundColor = "var(--bg-color-after)"
-  document.getElementById("candidatea").style.color = "var(--clr-text-5)"
-  document.getElementById("candidateb").style.color = "var(--clr-text-7)"
-  document.getElementById("candidateb").style.backgroundColor = "var(--clr-bg)"
-  document.getElementById("options-btn").style.backgroundColor = "var(--clr-text-3)"
-  document.getElementById("vote").disabled = false
-  close()
-}
-
-function setB() {
-  candidate = "candidateb"
-  document.getElementById("candidateb").style.backgroundColor = "var(--bg-color-after)"
-  document.getElementById("candidateb").style.color = "var(--clr-text-5)"
-  document.getElementById("candidatea").style.backgroundColor = "var(--clr-bg)"
-  document.getElementById("candidatea").style.color = "var(--clr-text-7)"
-  document.getElementById("options-btn").style.backgroundColor = "var(--clr-text-3)"
-  document.getElementById("vote").disabled = false
-  close()
 }
 
 var chartData = [{

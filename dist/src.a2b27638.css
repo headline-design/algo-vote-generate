@@ -223,6 +223,10 @@ button:enabled {
   cursor: pointer
 }
 
+.input--amount-2:focus {
+  outline: 0 !important;
+}
+
 .msg__close svg {
   display: block;
   width: 10px;
@@ -333,6 +337,59 @@ button.btn.btn--transparent {
   border-right-style: solid;
   border-right-width: 1px;
   border-right-color: var(--clr-text-1)
+}
+
+.input--amount-3 {
+  color: var(--primary-color)!important;
+  position: relative;
+  inset: 0;
+  width: 100%;
+  height: 60px;
+  padding-top: 18px;
+  padding-right: 50%;
+  padding-left: 24px;
+  margin: 0!important;
+  line-height: 60px!important;
+  display: block;
+  font-weight: 600!important;
+  font-size: 18px!important;
+  background: #1a1c22;
+  background: var(--clr-bg);
+  border: 1px solid #2e2f36;
+  border: var(--border);
+  border-width: 1px;
+  border-radius: 6px;
+  border-style: solid;
+  transition: border-color .15s ease-in-out;
+  margin-bottom: 0.3rem !important;
+}
+
+.vote-field__label-2 {
+  position: absolute;
+  top: 10px;
+  left: 24px;
+  z-index: 10;
+}
+
+.input {
+  font-family: inherit;
+  text-transform: capitalize;
+}
+
+.address-field label {
+  font-weight: 600;
+  font-size: 16px;
+  text-transform: capitalize;
+  color: var(--clr-text);
+}
+
+.input--amount-3:focus {
+  border-color: var(--primary-color) !important;
+  border: 1px solid;
+}
+
+.input--amount-3:focus {
+  outline: none !important;
 }
 
 .dropdown__content {
