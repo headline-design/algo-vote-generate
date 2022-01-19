@@ -4,7 +4,7 @@ import Pipeline from "@pipeline-ui-2/pipeline";
 import regeneratorRuntime from "regenerator-runtime";
 export {regeneratorRuntime}
 
-import Plotly from 'plotly.js-dist'
+//import Plotly from 'plotly.js-dist'
 
 window.voteConfig = {title: "Test Poll", asaIndex: 1234567, appId: 1234567, a: "Opt A", b: "Opt B"}
 
@@ -298,7 +298,7 @@ function checkVote() {
       document.getElementById("textTallies-1").innerText = window.voteConfig.a
       document.getElementById("textTallies-4").innerText = btally
       document.getElementById("textTallies-3").innerText = window.voteConfig.b
-      Plotly.redraw('voteChart', chartData, layout);
+      //Plotly.redraw('voteChart', chartData, layout);
     })
 }
 
@@ -400,7 +400,7 @@ var layout = {
 
 };
 
-Plotly.newPlot('voteChart', chartData, layout);
+//Plotly.newPlot('voteChart', chartData, layout);
 
 
 
