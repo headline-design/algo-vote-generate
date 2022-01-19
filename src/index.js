@@ -111,9 +111,11 @@ document.getElementById("wallet-connect-2").onclick = setOpenOne;
 document.getElementById("info").onclick = setOpenThree;
 document.getElementById("plotly-switch").onclick = setOpenSix;
 document.getElementById("options-btn").onclick = setOpenTwo;
+document.getElementById("options-btn-2").onclick = setOpenEight;
 document.getElementById("div-close").onclick = close;
 document.getElementById("msg-close").onclick = close;
 document.getElementById("options-close").onclick = close;
+document.getElementById("options-close-2").onclick = close;
 document.getElementById("info-close").onclick = close;
 document.getElementById("wallet-connect-close").onclick = close;
 
@@ -142,6 +144,14 @@ function setOpenThree() {
 
 }
 
+function setOpenEight() {
+  document.getElementById("modal-root-8").style.display = "block";
+  document.getElementById("modal-root-8").className = "modal-root-8 show";
+  document.getElementById("options-div-2").style.display = "none";
+  document.getElementById("options-btn-2").style.display = "none";
+
+}
+
 function setOpenSix() {
   let shown = showChart ? "block" : "none"
   showChart = !showChart
@@ -155,7 +165,10 @@ function close() {
   document.getElementById("modal-root-1").style.display = "none";
   document.getElementById("modal-root-3").style.display = "none";
   document.getElementById("modal-root-5").style.display = "none";
+  document.getElementById("modal-root-8").style.display = "none";
   document.getElementById("options-div").style.display = "block";
+  document.getElementById("options-div-2").style.display = "block";
+  document.getElementById("options-btn-2").style.display = "block";
   document.getElementById("plotly-container").style.display = "none";
 
 }

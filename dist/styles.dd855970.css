@@ -643,12 +643,12 @@ button#check:hover {
   border-style: solid
 }
 
-.own-address,button#options-btn {
+.own-address,button#options-btn,button#options-btn-2 {
   transition: border-color .2s ease-in-out;
   color: var(--clr-text-1)
 }
 
-button#options-btn {
+button#options-btn,button#options-btn-2 {
   border-width: 1px;
   border-style: solid;
   background-color: var(--clr-bg-lighter-2);
@@ -703,11 +703,11 @@ a#wallet-connect:hover,button#check:hover,button#delete:hover,button#AlgoSigner:
   background: var(--bg-color-active-2)
 }
 
-.modal-content.modal-content-size:hover,div#modal-root-3:hover {
+.modal-content.modal-content-size:hover,div#modal-root-3:hover,div#modal-root-8:hover {
   border: 1px solid var(--primary-color-lightest)
 }
 
-.modal-content.modal-content-size,div#modal-root-3 {
+.modal-content.modal-content-size,div#modal-root-3,div#modal-root-8 {
   border: 1px solid;
   border-color: var(--border)
 }
@@ -716,7 +716,7 @@ input#candidatea:hover,input#candidateb:hover {
   color: var(--clr-text-5)!important
 }
 
-button#options-btn:hover {
+button#options-btn:hover,button#options-btn-2:hover {
   font-weight: 600;
   box-shadow: var(--box-shadow-1);
   border-color: var(--primary-color-lightest-2);
@@ -728,7 +728,7 @@ button#options-btn:hover {
   transform: translate3d(0,-1px,0)
 }
 
-button#options-btn:active,button#options-btn:focus {
+button#options-btn:active,button#options-btn:focus,button#options-btn-2:active,button#options-btn-2:focus {
   background: var(--bg-color-focus)!important;
   color: var(--clr-text-4)!important;
   transition: stroke .2s ease-in-out;
@@ -736,7 +736,7 @@ button#options-btn:active,button#options-btn:focus {
   border-color: var(--primary-color-3)
 }
 
-.modal-root-3,button#check {
+.modal-root-3,button#check,.modal-root-8 {
   border: 1px solid #2e2f36;
   border: var(--border)
 }
@@ -745,7 +745,7 @@ button#wallet-connect-2 {
   border: 1px solid #2e2f36
 }
 
-.modal-root-3 {
+.modal-root-3,.modal-root-8 {
   background: var(--clr-bg-lighter-2);
   border-radius: 8px;
   z-index: 2000;
@@ -1407,7 +1407,7 @@ button:disabled {
   margin: 16px 0
 }
 
-.count__title,button#options-btn {
+.count__title,button#options-btn,button#options-btn-2 {
   display: flex;
   align-items: center;
   justify-content: center
