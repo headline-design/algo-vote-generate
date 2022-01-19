@@ -52,7 +52,7 @@
   <div class="vote-field__btns-2"><div target="_blank" class="btn btn--connect-wallet" id="slider-2" style="display: none;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
     <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"></path>
-  </svg><span class="count__title">Loaded</span></div><div target="_blank" class="btn btn--connect-wallet" id="token-minted" style="display: none;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+  </svg><span id="loaded" class="count__title">Loaded</span><span id="wallet-loaded" class="count__title" style="display:none">Connected</span></div><div target="_blank" class="btn btn--connect-wallet" id="token-minted" style="display: none;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path>
     <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"></path>
   </svg><span class="count__title">Token minted</span></div><div id="slider" class="btn btn--change-poll" ><div class="waiting-slider waiting-slider--full waiting-slider--helper-blue"><div class="waiting-slider__track"></div></div></div>
@@ -97,7 +97,7 @@
 </div>
   </div></div><button class="btn btn--generate-link" id="deploy" >Create poll</button> <br>
   <div class="ballot"></div>
-  <div id="modal-root" style="display:none"><div class="modal"><div class="modal-content modal-content-size"><div class="modal-topbar"><h2 class="modal-title">Voting Data</h2><button id="div-close" class="modal-close"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.75732 7.75732L16.2426 16.2426"></path><path d="M7.75739 16.2426L16.2427 7.75732"></path></svg></button></div><div class="modal-body">
+  <div id="modal-root" style="display:none"><div class="modal"><div class="modal-content modal-content-size"><div class="modal-topbar"><h2 id="poll-title" class="modal-title">Voting Data</h2><button id="div-close" class="modal-close"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.75732 7.75732L16.2426 16.2426"></path><path d="M7.75739 16.2426L16.2427 7.75732"></path></svg></button></div><div class="modal-body">
   <div class="vote-field"></div><div class="vote-field"><div class="vote-container"><div class="tallies-field">
   <label class="tallies-label" id="textTallies-1"></label><p class="input input--amount" id="textTallies-2"></p></div><button id="plotly-switch" class="vote-switch"><svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 20 20" height="18px" viewBox="0 0 20 20" width="18px" fill="current-color"><rect fill="none" height="20" width="20"/><path d="M11.72,8.28L10,7.5l1.72-0.78L12.5,5l0.78,1.72L15,7.5l-1.72,0.78L12.5,10L11.72,8.28z M3.5,12l0.78-1.72L6,9.5L4.28,8.72 L3.5,7L2.72,8.72L1,9.5l1.72,0.78L3.5,12z M7,8l0.94-2.06L10,5L7.94,4.06L7,2L6.06,4.06L4,5l2.06,0.94L7,8z M17.88,6.5l-5.61,6.31 L9,9.54l-6,6.01l1.06,1.06L9,11.67L12.33,15L19,7.5L17.88,6.5z"/></svg></button><div class="tallies-field"><label class="tallies-label" id="textTallies-3"></label><p class="input input--amount" id="textTallies-4"></p></div></div><div id="plotly-container" style="display:none"><div id="voteChart"</div></div></span></div></div></div></div></div>
   </div>
@@ -108,25 +108,29 @@
   </svg><div class="app-verify">App created</div></div></span>
   <div class="vote-field"><label class="vote-field__label-2 label">Voting token</label><input type="number" placeholder="asset id" class="input input--amount-3" autocorrect="off" spellcheck="false" id="asset" value=""></div>
   <div class="vote-field"><label class="vote-field__label-2 label">App ID</label><input type="number"  placeholder="App ID" class="input input--amount-3" autocorrect="off" spellcheck="false" id="appId" value=""></div>
+  <div class="vote-field"><label class="vote-field__label-4 label"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-terminal" viewBox="0 0 16 16">
+    <path d="M6 9a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3A.5.5 0 0 1 6 9zM3.854 4.146a.5.5 0 1 0-.708.708L4.793 6.5 3.146 8.146a.5.5 0 1 0 .708.708l2-2a.5.5 0 0 0 0-.708l-2-2z"></path>
+    <path d="M2 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2zm12 1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h12z"></path>
+  </svg><label class="dapp-code">Dapp Code</label></label>
+  <input class="input input--amount-4" autocorrect="off" spellcheck="false" id="voteCode" disabled></input></div>
   <div id="votediv" class="algo-vote-widget" align="center">
+
+<div class="footer-btns" align="center">
+  <button id="check" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn--connect-wallet"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-bar-graph" viewBox="0 0 16 16">
+    <path d="M4.5 12a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-1zm3 0a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1zm3 0a.5.5 0 0 1-.5-.5v-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-.5.5h-1z"/>
+    <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+  </svg><span class="count__title">Check Vote</span></button>
     
-    <p>Widget Code:</p>
-
-    <textarea id="voteCode"></textarea><br><br>
-    <iframe id="preview"></iframe><br><br>
-
-<br><br>
-    <button id="check" data-bs-toggle="modal" data-bs-target="#exampleModal"  class="btn btn--connect-wallet" disabled><span class="count__title">Check Vote</span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="current-color" class="bi bi-file-bar-graph" viewBox="0 0 16 16">
-      <path d="M4.5 12a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-1zm3 0a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1zm3 0a.5.5 0 0 1-.5-.5v-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-.5.5h-1z"/>
-      <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
-      </svg></button>
+    <button id="delete" class="btn btn--connect-wallet"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
+        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
+      </svg><span class="count__title">Delete Poll</span></button>
+  </div>
 
     <div id="voteChart"></div>
   
 
-    <button id="check">Check Poll Tallies</button>
-    <button id="delete">Delete Poll</button>
-  </div></div>  <footer class="footer"><div class="footer__menu"><div class="footer__menu__wrapper"><ul class="footer__menu__list"><li></li></ul></div></div></footer></div></div>
+  </div>  <footer class="footer"><div class="footer__menu"><div class="footer__menu__wrapper"><ul class="footer__menu__list"></ul></div></div></footer></div></div>
 
   <script src="src/index.js"></script>
 </body>

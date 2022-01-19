@@ -426,6 +426,7 @@ span.badge-2.badge {
   --color: #8dffea;
   --bg: rgba(189,255,243,0.1);
   --border-color: rgba(9,144,119,0.2);
+  background: var(--badge-bg);
 }
 
 .app-verify {
@@ -627,7 +628,7 @@ div#slider-2,div#slider {
   --border-color: rgba(9,144,119,0.2)
 }
 
-a#wallet-connect:hover,button#AlgoSigner:hover,button#check:hover,button#wallet-connect-2:hover {
+a#wallet-connect:hover,button#delete:hover,button#AlgoSigner:hover,button#check:hover,button#wallet-connect-2:hover {
   font-weight: 600;
   box-shadow: 0 4px 10px rgb(0 0 0/10%);
   background: var(--btn-bg-2)!important
@@ -695,7 +696,7 @@ button#WalletConnect:hover,button#myAlgoWallet:hover,input#candidatea:hover,inpu
   flex-direction: row
 }
 
-a#wallet-connect:hover,button#AlgoSigner:active,button#WalletConnect:active,button#myAlgoWallet:active,input#candidatea:active,input#candidateb:active {
+a#wallet-connect:hover,button#check:hover,button#delete:hover,button#AlgoSigner:active,button#WalletConnect:active,button#myAlgoWallet:active,input#candidatea:active,input#candidateb:active {
   background: var(--bg-color-active-2)
 }
 
@@ -775,11 +776,11 @@ button#AlgoSigner:focus,button#WalletConnect:focus,button#myAlgoWallet:focus,inp
   color: #d6d6dc
 }
 
-.shoulder__item,a#wallet-connect {
+.shoulder__item,a#wallet-connect,button#check,button#delete {
   background-color: var(--clr-text-3)
 }
 
-a#wallet-connect {
+a#wallet-connect,button#check,button#delete {
   display: flex;
   border: 1px solid #2e2f36;
   border-color: var(--clr-text-darker);
@@ -788,7 +789,7 @@ a#wallet-connect {
   color: var(--clr-text-1)
 }
 
-a#wallet-connect:hover {
+a#wallet-connect:hover,button#check:hover,button#delete:hover {
   box-shadow: var(--box-shadow-1);
   border-color: var(--primary-color-lightest-2);
   border-width: 1px;
@@ -802,7 +803,7 @@ a#wallet-connect:hover {
   fill: var(--clr-text-1)
 }
 
-a#wallet-connect:focus {
+a#wallet-connect:focus,button#check:focus,button#delete:focus {
   border-color: var(--primary-color-2)!important;
   color: var(--clr-text-4);
   background-color: var(--bg-color-active)!important
@@ -887,21 +888,62 @@ div[class*=pipeline-select]>div:hover {
   --btn-bg-3: #27303f
 }
 
-button#check:disabled {
-  color: var(--primary-color-lightest)!important;
-  background: rgba(46,147,247,.08)!important;
-  font-weight: 700!important
-}
-
-button#check,button#wallet-connect-2 {
+button#wallet-connect-2 {
   color: var(--primary-color-lightest)!important;
   fill: var(--primary-color-lightest);
   display: flex
 }
 
-button#check:hover {
-  color: var(--primary-color-lightest-3)!important;
-  fill: var(--primary-color-lightest-3)!important
+label.dapp-code {
+  margin-left: 8px;
+}
+
+.vote-field__label-4 {
+  position: absolute;
+  top: 10px;
+  left: 24px;
+  z-index: 10;
+  display: flex;
+}
+
+label.vote-field__label-4.label {
+  padding-top: 5px;
+}
+
+.input--amount-4 {
+  color: var(--primary-color)!important;
+  position: relative;
+  text-transform: revert !important;
+  inset: 0;
+  width: 100%;
+  height: 80px;
+  padding-top: 22px;
+  padding-right: 24px;
+  padding-left: 24px;
+  margin: 0!important;
+  line-height: 50px!important;
+  display: block;
+  font-weight: 600!important;
+  font-size: 15px!important;
+  background: #1a1c22;
+  background: var(--clr-bg);
+  border: 1px solid #2e2f36;
+  border: var(--border);
+  border-width: 1px;
+  border-radius: 6px;
+  border-style: solid;
+  transition: border-color .15s ease-in-out;
+  margin-bottom: 0.3rem !important;
+  cursor: text;
+}
+
+.footer-btns {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 1rem;
+  border-top: 1px solid var(--border);
 }
 
 body {
@@ -1475,10 +1517,6 @@ button#wallet-connect-2:focus {
   border-color: var(--primary-color)!important;
   color: var(--primary-color)!important;
   background-color: var(--bg-color-active)!important
-}
-
-button#check[disabled]:hover {
-  border-style: none!important
 }
 
 .vote-switch svg {

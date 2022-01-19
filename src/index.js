@@ -55,7 +55,9 @@ document.getElementById("WalletConnect").onclick = () => {
   toggleLoader("slider",false)
   document.getElementById("slider-2").style.display = "flex"
   document.getElementById("wallet-connect-2").style.display = "none"
-  document.getElementById("wallet-connected").style.display = "block" 
+  document.getElementById("wallet-connected").style.display = "block"
+  document.getElementById("loaded").style.display = "none"
+  document.getElementById("wallet-loaded").style.display = "block" 
   })
   
 }
@@ -77,7 +79,9 @@ document.getElementById("AlgoSigner").onclick = () => {
   toggleLoader("slider",false)
   document.getElementById("slider-2").style.display = "flex"
   document.getElementById("wallet-connect-2").style.display = "none"
-  document.getElementById("wallet-connected").style.display = "block" })
+  document.getElementById("wallet-connected").style.display = "block"
+  document.getElementById("loaded").style.display = "none"
+  document.getElementById("wallet-loaded").style.display = "block" })
 }
 
 document.getElementById("myAlgoWallet").onclick = () => {
@@ -97,7 +101,9 @@ document.getElementById("myAlgoWallet").onclick = () => {
   toggleLoader("slider",false)
   document.getElementById("slider-2").style.display = "flex"
   document.getElementById("wallet-connect-2").style.display = "none"
-  document.getElementById("wallet-connected").style.display = "block" })
+  document.getElementById("wallet-connected").style.display = "block"
+  document.getElementById("loaded").style.display = "none"
+  document.getElementById("wallet-loaded").style.display = "block" })
 }
 
 document.getElementById("toggle-css").onclick = toggleMode;
@@ -110,8 +116,6 @@ document.getElementById("msg-close").onclick = close;
 document.getElementById("options-close").onclick = close;
 document.getElementById("info-close").onclick = close;
 document.getElementById("wallet-connect-close").onclick = close;
-
-document.getElementById("check").onclick = checkVote
 
 //var loading = false
 
@@ -256,6 +260,7 @@ document.getElementById("check").onclick = checkVote
 document.getElementById("delete").onclick = deleteApp
 
 function checkVote() {
+  setOpen()
   let index = document.getElementById("appId").value
   Pipeline.readGlobalState(index).then(
     data => {
@@ -275,6 +280,11 @@ function checkVote() {
       window.tallies = {a: atally, b: btally}
       chartData[0].values = [atally,btally],
       chartData[0].labels = [window.voteConfig.a,window.voteConfig.b]
+      document.getElementById("poll-title").innerText = window.voteConfig.title
+      document.getElementById("textTallies-2").innerText = atally
+      document.getElementById("textTallies-1").innerText = window.voteConfig.a
+      document.getElementById("textTallies-4").innerText = btally
+      document.getElementById("textTallies-3").innerText = window.voteConfig.b
       Plotly.redraw('voteChart', chartData, layout);
     })
 }
@@ -291,11 +301,10 @@ async function deploy() {
 
   let length = parseInt(document.getElementById("roundNumber").value)
 
-  generateCode()
-
   Pipeline.deployTeal(tealContracts[name].program, tealContracts[name].clearProgram, [1, 1, 0, 6], [lastRound, lastRound + length, lastRound, lastRound + length]).then(data => { document.getElementById("appId").value = data;toggleLoader("slider-3",false)
   document.getElementById("badge-verification").style.display = "none"
-  document.getElementById("badge-verified").style.display = "inline-block" })
+  document.getElementById("badge-verified").style.display = "inline-block"
+  generateCode() })
 }
 
 function modifyTeal(){
@@ -314,7 +323,7 @@ function modifyTeal(){
 const asaData = {
   creator: "",
   note: "Voting token creation",
-  amount: 1,
+  amount: 200000,
   decimals: 0,
   assetName: "AnotherNft",
   unitName: "votetkn"
@@ -346,16 +355,15 @@ function generateCode(){
   let code = "<script>window.voteConfig = " + JSON.stringify(window.voteConfig) + "</script>" + snippet
 
   document.getElementById("voteCode").value = code
-
-  let doc = document.getElementById('preview').contentWindow.document;
+  /*let doc = document.getElementById('preview').contentWindow.document;
   doc.open();
   doc.write(code);
-  doc.close();
+  doc.close();*/
 
 }
 
 function deleteApp(){
-  appId = parseInt(document.getElementById("appId").value)
+  let appId = parseInt(document.getElementById("appId").value)
   Pipeline.deleteApp(appId).then(data => log("App deletion: " + data))
 }
 
