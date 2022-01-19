@@ -149,11 +149,12 @@ input[data-autocompleted] {
   --h1: #fff;
   --badge-bg: #27303f;
   --wallet-1: #27303f;
-  --wallet-2: #323a58
+  --wallet-2: #323a58;
+  --footer-border: #2e2f36;
 }
 
 :root .light {
-  background-color: #fff;
+  background-color: #fafafa;
   --primary-color: #532ae6;
   --primary-color-2: #000;
   --secondary-color: #535790;
@@ -187,7 +188,9 @@ input[data-autocompleted] {
   --h1: #333;
   --badge-bg: #b0b0f5;
   --wallet-1: #eaeaea;
-  --wallet-2: #d6d6dc
+  --wallet-2: #d6d6dc;
+  --footer-bg: #fff;
+  --footer-border: #eaeaea;
 }
 
 .ballot.flex {
@@ -864,6 +867,65 @@ div[class*=pipeline-select]>div:hover {
   margin-bottom: .5rem
 }
 
+.footer-max-width-margin {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem;
+  max-width: 1200px;
+}
+
+.footer-max-width {
+  padding: 2rem 0 4rem;
+  min-height: 400px;
+  text-align: start;
+}
+
+.grid.footer-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-row-gap: 2rem;
+}
+
+h4.footer-columns {
+  margin-bottom: 0.75rem;
+}
+
+.copyright.footer-columns {
+  margin-top: 3rem;
+}
+
+a.footer-columns, p.footer-columns, .copyright.footer-columns {
+  color: #8c8c8c;
+}
+
+.fw5 {
+  font-weight: 500;
+}
+
+.f5 {
+  font-size: 0.8888888888888888em;
+}
+
+.footer {
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 100px;
+  padding: 0 0;
+  background-color: var(--footer-bg);
+  border-top: 1px solid var(--footer-border);
+  overflow: hidden;
+}
+
+p.footer-columns {
+  margin-top: 0.4rem;
+}
+
+svg.Footer-module--logo--3otJM {
+  fill: var(--clr-white);
+}
+
+
+
 *,:after,:before {
   margin: 0;
   padding: 0;
@@ -885,7 +947,8 @@ div[class*=pipeline-select]>div:hover {
   --clr-text-4: #fff;
   --btn-bg-1: #27303f;
   --btn-bg-2: #27303f;
-  --btn-bg-3: #27303f
+  --btn-bg-3: #27303f;
+  --footer-bg: #121418;
 }
 
 button#wallet-connect-2 {
