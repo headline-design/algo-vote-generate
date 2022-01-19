@@ -643,6 +643,12 @@ button#check:hover {
   border-style: solid
 }
 
+@media (max-width: 575px){
+  div#my-balance {
+  display: none !important;
+}
+}
+
 .own-address,button#options-btn,button#options-btn-2 {
   transition: border-color .2s ease-in-out;
   color: var(--clr-text-1)
@@ -884,6 +890,32 @@ div[class*=pipeline-select]>div:hover {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-row-gap: 2rem;
+}
+
+@media screen and (max-width: 800px){
+.grid.footer-columns {
+    grid-template-columns: 1fr 1fr;
+}
+}
+
+@media screen and (max-width: 800px){
+a.footer-columns {
+    display: block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+}
+
+@media (max-width: 400px){
+  .logo {
+    width: 40%;
+}
+}
+
+@media (max-width: 360px){
+button#wallet-connect-2 {
+  font-size: 13px;
+}
 }
 
 h4.footer-columns {
