@@ -1935,3 +1935,7 @@ label.options-label {
 .modal-body li,.modal-body p {
   text-align: justify
 }
+
+a, button {
+    align-items: center !important;
+}
