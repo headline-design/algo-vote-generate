@@ -53358,6 +53358,14 @@ var tealContracts = {
 function getContracts() {
   return _getContracts.apply(this, arguments);
 }
+/* if (window.voteConfig !== undefined) {
+  document.getElementById("asset").value = window.voteConfig.asaIndex
+  document.getElementById("assetTwo").value = window.voteConfig.asaIndex
+  document.getElementById("appId").value = window.voteConfig.appId
+  document.getElementById("appIdTwo").value = window.voteConfig.appId
+  document.getElementById("voteTitle-3").innerText = window.voteConfig.title
+} */
+
 
 function _getContracts() {
   _getContracts = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.default.mark(function _callee() {
@@ -53409,14 +53417,6 @@ function _getContracts() {
     }, _callee);
   }));
   return _getContracts.apply(this, arguments);
-}
-
-if (window.voteConfig !== undefined) {
-  document.getElementById("asset").value = window.voteConfig.asaIndex;
-  document.getElementById("assetTwo").value = window.voteConfig.asaIndex;
-  document.getElementById("appId").value = window.voteConfig.appId;
-  document.getElementById("appIdTwo").value = window.voteConfig.appId;
-  document.getElementById("voteTitle-3").innerText = window.voteConfig.title;
 }
 
 var wallet = _pipeline.default.init();
@@ -53815,7 +53815,7 @@ function generateCode() {
 function deleteApp() {
   document.getElementById("verify-label-4").style.display = "none";
   toggleLoader("slider-5", true);
-  var appId = parseInt(document.getElementById("appId").value) || parseInt(appIdTwo);
+  var appId = parseInt(document.getElementById("appIdTwo").value) || parseInt(document.getElementById("appId").value);
 
   _pipeline.default.deleteApp(appId).then(function (data) {
     "App deletion: " + data;

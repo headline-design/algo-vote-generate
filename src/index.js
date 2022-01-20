@@ -30,13 +30,13 @@ async function getContracts() {
   }
 }
 
-if (window.voteConfig !== undefined) {
+/* if (window.voteConfig !== undefined) {
   document.getElementById("asset").value = window.voteConfig.asaIndex
   document.getElementById("assetTwo").value = window.voteConfig.asaIndex
   document.getElementById("appId").value = window.voteConfig.appId
   document.getElementById("appIdTwo").value = window.voteConfig.appId
   document.getElementById("voteTitle-3").innerText = window.voteConfig.title
-}
+} */
 
 const wallet = Pipeline.init()
 
@@ -407,7 +407,7 @@ function generateCode(){
 function deleteApp(){
   document.getElementById("verify-label-4").style.display = "none"
   toggleLoader("slider-5",true)
-  let appId = parseInt(document.getElementById("appId").value)  || parseInt(appIdTwo)
+  let appId = parseInt(document.getElementById("appIdTwo").value) || parseInt(document.getElementById("appId").value)
   Pipeline.deleteApp(appId).then(data => {
     ("App deletion: " + data)
     toggleLoader("slider-5",false)
