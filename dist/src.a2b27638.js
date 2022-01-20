@@ -53342,7 +53342,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 //import Plotly from 'plotly.js-dist'
 window.voteConfig = {
-  title: "DAO Poll",
+  title: "DAO Session",
   asaIndex: 1234567,
   appId: 1234567,
   a: "Opt A",
@@ -53504,11 +53504,13 @@ document.getElementById("plotly-switch").onclick = setOpenSix;
 document.getElementById("options-btn").onclick = setOpenTwo;
 document.getElementById("options-btn-2").onclick = setOpenEight;
 document.getElementById("info-3").onclick = setOpenTen;
+document.getElementById("info-1").onclick = setOpenTwelve;
 document.getElementById("div-close").onclick = close;
 document.getElementById("msg-close").onclick = close;
 document.getElementById("options-close").onclick = close;
 document.getElementById("options-close-2").onclick = close;
 document.getElementById("info-close").onclick = close;
+document.getElementById("info-close-1").onclick = close;
 document.getElementById("info-close-3").onclick = close;
 document.getElementById("wallet-connect-close").onclick = close; //var loading = false
 
@@ -53525,6 +53527,11 @@ function setOpenOne() {
 function setOpenTen() {
   document.getElementById("modal-root-11").style.display = "block";
   document.getElementById("modal-root-11").className = "modal fade show";
+}
+
+function setOpenTwelve() {
+  document.getElementById("modal-root-12").style.display = "block";
+  document.getElementById("modal-root-12").className = "modal fade show";
 }
 
 function setOpenTwo() {
@@ -53562,6 +53569,7 @@ function close() {
   document.getElementById("modal-root-5").style.display = "none";
   document.getElementById("modal-root-8").style.display = "none";
   document.getElementById("modal-root-11").style.display = "none";
+  document.getElementById("modal-root-12").style.display = "none";
   document.getElementById("options-div").style.display = "block";
   document.getElementById("options-div-2").style.display = "block";
   document.getElementById("options-btn-2").style.display = "flex";
@@ -53724,6 +53732,7 @@ function _deploy() {
 
             _pipeline.default.deployTeal(tealContracts[name].program, tealContracts[name].clearProgram, [1, 1, 0, 6], [lastRound, lastRound + length, lastRound, lastRound + length]).then(function (data) {
               document.getElementById("appId").value = data;
+              document.getElementById("appIdTwo").value = data;
               toggleLoader("slider-32", false);
               document.getElementById("badge-verification-2").style.display = "none";
               document.getElementById("badge-verified-2").style.display = "inline-block";
@@ -53780,6 +53789,7 @@ function createAsa() {
 
   _pipeline.default.createAsa(asaData).then(function (data) {
     document.getElementById("asset").value = data;
+    document.getElementById("assetTwo").value = data;
     document.getElementById("token-verified").style.display = "inline-flex";
     toggleLoader("slider-4", false);
     document.getElementById("token-verification").style.display = "none";
@@ -53805,7 +53815,7 @@ function generateCode() {
 function deleteApp() {
   document.getElementById("verify-label-4").style.display = "none";
   toggleLoader("slider-5", true);
-  var appId = parseInt(document.getElementById("appId").value);
+  var appId = parseInt(document.getElementById("appId").value) || parseInt(appIdTwo);
 
   _pipeline.default.deleteApp(appId).then(function (data) {
     "App deletion: " + data;
