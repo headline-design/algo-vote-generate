@@ -282,17 +282,20 @@ button:enabled {
   margin-top: 1rem
 }
 
-.footer-top-2 {
-  margin-top: 0rem;
+.footer-top-1,.footer-top-2 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   align-content: center;
   flex-direction: row;
-  flex-wrap: nowrap;
+  flex-wrap: nowrap
 }
 
-button#info-3,button#info-1 {
+.footer-top-2 {
+  margin-top: 0
+}
+
+button#info-1,button#info-3 {
   margin-bottom: 1rem;
   margin-right: .8rem;
   position: relative;
@@ -301,13 +304,7 @@ button#info-3,button#info-1 {
 }
 
 .footer-top-1 {
-  margin-top: 1.2rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  align-content: center;
-  flex-direction: row;
-  flex-wrap: nowrap
+  margin-top: 1.2rem
 }
 
 .msg__close svg {
@@ -524,9 +521,12 @@ div#slider-3 {
 }
 
 div#slider,div#slider-2 {
-  background-color: var(--success-badge);
   max-height: 38px!important;
   height: 38px!important
+}
+
+div#slider-2 {
+  background-color: var(--success-badge)
 }
 
 div#slider {
@@ -1811,10 +1811,8 @@ button#wallet-connect-2:focus {
 .modal-body {
   max-height: 328px;
   overflow-y: auto;
-  padding-right: 10px;
+  padding-right: 10px
 }
-
-
 
 .modal-body::-webkit-scrollbar {
   width: 8px
