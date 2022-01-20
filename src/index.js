@@ -10,10 +10,10 @@ window.voteConfig = {title: "DAO Session", asaIndex: 1234567, appId: 1234567, a:
 
 const tealNames = ["Permissioned Voting"]
 
-const snippet = `<link rel="stylesheet" href="https://unpkg.com/algo-vote@1.0.1/dist/styles.dd855970.css">
-<link rel="stylesheet" href="https://unpkg.com/algo-vote@1.0.1/dist/src.a2b27638.css">
+const snippet = `<link rel="stylesheet" href="https://unpkg.com/algo-vote@1.0.2/dist/styles.dd855970.css">
+<link rel="stylesheet" href="https://unpkg.com/algo-vote@1.0.2/dist/src.a2b27638.css">
 <div id="vote-root" align="center"></div>
-<script src="https://unpkg.com/algo-vote@1.0.1/dist/src.a2b27638.js"></script>`
+<script src="https://unpkg.com/algo-vote@1.0.2/dist/src.a2b27638.js"></script>`
 
 const tealContracts = {
   "Permissioned Voting": {},
