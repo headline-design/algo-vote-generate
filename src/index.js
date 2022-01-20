@@ -6,7 +6,7 @@ export {regeneratorRuntime}
 
 //import Plotly from 'plotly.js-dist'
 
-window.voteConfig = {title: "Test Poll", asaIndex: 1234567, appId: 1234567, a: "Opt A", b: "Opt B"}
+window.voteConfig = {title: "DAO Poll", asaIndex: 1234567, appId: 1234567, a: "Opt A", b: "Opt B"}
 
 const tealNames = ["Permissioned Voting"]
 
@@ -32,7 +32,9 @@ async function getContracts() {
 
 if (window.voteConfig !== undefined) {
   document.getElementById("asset").value = window.voteConfig.asaIndex
+  document.getElementById("assetTwo").value = window.voteConfig.asaIndex
   document.getElementById("appId").value = window.voteConfig.appId
+  document.getElementById("appIdTwo").value = window.voteConfig.appId
   document.getElementById("voteTitle-3").innerText = window.voteConfig.title
 }
 
@@ -112,11 +114,13 @@ document.getElementById("info").onclick = setOpenThree;
 document.getElementById("plotly-switch").onclick = setOpenSix;
 document.getElementById("options-btn").onclick = setOpenTwo;
 document.getElementById("options-btn-2").onclick = setOpenEight;
+document.getElementById("info-3").onclick = setOpenTen;
 document.getElementById("div-close").onclick = close;
 document.getElementById("msg-close").onclick = close;
 document.getElementById("options-close").onclick = close;
 document.getElementById("options-close-2").onclick = close;
 document.getElementById("info-close").onclick = close;
+document.getElementById("info-close-3").onclick = close;
 document.getElementById("wallet-connect-close").onclick = close;
 
 //var loading = false
@@ -130,6 +134,12 @@ function setOpenOne() {
   document.getElementById("modal-root-1").style.display = "block";
   document.getElementById("modal-root-1").className = "modal fade show";
 }
+
+function setOpenTen() {
+  document.getElementById("modal-root-11").style.display = "block";
+  document.getElementById("modal-root-11").className = "modal fade show";
+}
+
 
 function setOpenTwo() {
   document.getElementById("modal-root-3").style.display = "block";
@@ -166,9 +176,10 @@ function close() {
   document.getElementById("modal-root-3").style.display = "none";
   document.getElementById("modal-root-5").style.display = "none";
   document.getElementById("modal-root-8").style.display = "none";
+  document.getElementById("modal-root-11").style.display = "none";
   document.getElementById("options-div").style.display = "block";
   document.getElementById("options-div-2").style.display = "block";
-  document.getElementById("options-btn-2").style.display = "block";
+  document.getElementById("options-btn-2").style.display = "flex";
   document.getElementById("plotly-container").style.display = "none";
 
 }
@@ -303,8 +314,8 @@ function checkVote() {
 }
 
 async function deploy() {
-  document.getElementById("verify-label-2").style.display = "none"
-  toggleLoader("slider-3",true)
+  document.getElementById("verify-label-22").style.display = "none"
+  toggleLoader("slider-32",true)
   modifyTeal()
 
   let name = "Permissioned Voting"
@@ -314,9 +325,10 @@ async function deploy() {
 
   let length = parseInt(document.getElementById("roundNumber").value)
 
-  Pipeline.deployTeal(tealContracts[name].program, tealContracts[name].clearProgram, [1, 1, 0, 6], [lastRound, lastRound + length, lastRound, lastRound + length]).then(data => { document.getElementById("appId").value = data;toggleLoader("slider-3",false)
-  document.getElementById("badge-verification").style.display = "none"
-  document.getElementById("badge-verified").style.display = "inline-block"
+  Pipeline.deployTeal(tealContracts[name].program, tealContracts[name].clearProgram, [1, 1, 0, 6], [lastRound, lastRound + length, lastRound, lastRound + length]).then(data => { document.getElementById("appId").value = data;
+  toggleLoader("slider-32",false)
+  document.getElementById("badge-verification-2").style.display = "none"
+  document.getElementById("badge-verified-2").style.display = "inline-block"
   generateCode() })
 }
 
@@ -337,6 +349,9 @@ const asaData = {
   creator: "",
   note: "Voting token creation",
   amount: 200000,
+  manager: "",
+  reserve: "",
+  clawback: "",
   decimals: 0,
   assetName: "AnotherNft",
   unitName: "votetkn"
@@ -345,7 +360,10 @@ const asaData = {
 function createAsa(){
   document.getElementById("verify-label-1").style.display = "none"
   toggleLoader("slider-4",true)
-  asaData.creator = Pipeline.address
+  let myaddr = Pipeline.address
+  asaData.creator = myaddr
+  Object.assign(asaData,{manager:myaddr,reserve:myaddr,clawback:myaddr})
+  console.log(asaData)
   asaData.amount = parseInt(document.getElementById("asaAmount").value)
   asaData.assetName = document.getElementById("asaName").value
   Pipeline.createAsa(asaData).then(data => {
@@ -376,8 +394,17 @@ function generateCode(){
 }
 
 function deleteApp(){
+  document.getElementById("verify-label-4").style.display = "none"
+  toggleLoader("slider-5",true)
   let appId = parseInt(document.getElementById("appId").value)
-  Pipeline.deleteApp(appId).then(data => log("App deletion: " + data))
+  Pipeline.deleteApp(appId).then(data => {
+    ("App deletion: " + data)
+    toggleLoader("slider-5",false)
+    document.getElementById("verify-label-4").style.display = "flex"
+    document.getElementById("delete-verification").style.display = "none"
+    document.getElementById("deleted-verified").style.display = "inline-block"
+  }
+  )
 }
 
 var chartData = [{
